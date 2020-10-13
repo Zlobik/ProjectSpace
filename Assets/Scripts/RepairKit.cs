@@ -4,18 +4,25 @@ using UnityEngine;
 
 public class RepairKit : MonoBehaviour
 {
-    [SerializeField] private float _volume;
+    [SerializeField] private float _health;
 
-    public float Volume { get; private set; }
+    private SpriteRenderer _render;
+    private BoxCollider2D _boxCollider;
+
+    public float Health => _health;
 
     private void Start()
     {
-        Volume = _volume;
+        _render = GetComponent<SpriteRenderer>();
+        _boxCollider = GetComponent<BoxCollider2D>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.GetComponent<Rocket>())
-            gameObject.SetActive(false);
+        {
+            _render.sprite = null;
+            _boxCollider.enabled = false;
+        }
     }
 }

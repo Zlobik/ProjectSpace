@@ -1,96 +1,37 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-using DG.Tweening;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class RocketMover : MonoBehaviour
 {
-    [SerializeField] private Rigidbody2D _rigidBody;
-    [SerializeField] private float _rotationSpeed;
-    [SerializeField] private float _upForce;
-    [SerializeField] private float _animationSpeed;
-
-    [SerializeField] private Slider _fuelBar;
-    [SerializeField] private float _idleConsuption;
-    [SerializeField] private float _upConsuption;
-    [SerializeField] private GameObject _rocketBottom;
-
-    private bool _isRefueled = false;
-    private float _timePassed;
-    private Rocket _rocket;
-
-    public float SpeedOfTheObject { get; private set; }
+    [SerializeField] private Rigidbody2D _rigidbody;
+    [SerializeField] private float _upSpeed;
+    [SerializeField] private float _rotateSpeed;
 
     private void Start()
     {
-        _rigidBody = GetComponent<Rigidbody2D>();
-        _rocket = GetComponent<Rocket>();
+        _rigidbody = GetComponent<Rigidbody2D>();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void MoveUp()
     {
-        if (collision.TryGetComponent(out Fuel fuel))
-        {
-            _isRefueled = true;
-            Refuel(fuel.Volume);
-        }
+        _rigidbody.AddForce(transform.up * _upSpeed * Time.deltaTime, ForceMode2D.Force);
     }
 
-    private void BurnFuel(float consuption)
+    public void MoveDown()
     {
-        if (consuption > 0 && !_isRefueled)
-            _fuelBar.DOValue(_fuelBar.value - consuption, 0.3f);
+        _rigidbody.AddForce(transform.up * -(_upSpeed / 3) * Time.deltaTime, ForceMode2D.Force);
     }
 
-    public void Refuel(float fuelVolume)
+    public void RotateRight()
     {
-        _fuelBar.DOValue(_fuelBar.value + fuelVolume, _animationSpeed);
-
-        _isRefueled = false;
+        _rigidbody.rotation -= _rotateSpeed * Time.deltaTime;
     }
 
-    public float GetFuelValue()
+    public void RotateLeft()
     {
-        return _fuelBar.value;
-    }
-
-    private void Update()
-    {
-        SpeedOfTheObject = _rigidBody.velocity.magnitude * Time.deltaTime;
-
-        if (_isRefueled)
-        {
-            _timePassed += Time.deltaTime;
-
-            if (_timePassed >= _animationSpeed)
-            {
-                _timePassed = 0;
-                _isRefueled = false;
-            }
-        }
-
-        if (_fuelBar.value != 0 && _rocket.GetHealthBarValue() != 0 && !_rocket.IsDie)
-        {
-            if (Input.GetKey(KeyCode.W))
-            {
-                _rigidBody.AddForce(transform.up * _upForce * Time.deltaTime);
-
-                BurnFuel(_upConsuption * Time.deltaTime);
-            }
-
-            if (Input.GetKey(KeyCode.S))
-                _rigidBody.AddForce((transform.up * -_upForce * Time.deltaTime) * 0.3f, ForceMode2D.Force);
-
-            if (Input.GetKey(KeyCode.A))
-                _rigidBody.rotation += _rotationSpeed * Time.deltaTime;
-
-            if (Input.GetKey(KeyCode.D))
-                _rigidBody.rotation -= _rotationSpeed * Time.deltaTime;
-
-            else
-                BurnFuel(_idleConsuption * Time.deltaTime);
-        }
-        else
-            _rocket.IsDie = true;
+        _rigidbody.rotation += _rotateSpeed * Time.deltaTime;
     }
 }

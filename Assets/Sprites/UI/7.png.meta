@@ -1,10 +1,7 @@
 fileFormatVersion: 2
-guid: 6bd75a4d1e17d1a41b239d2b17f4af90
+guid: b78f5e44f12ff7f4bbe5a1101eeb0c8b
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: 7028616704906629411
-    second: 7_0
+  internalIDToNameTable: []
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -49,7 +46,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
-  spriteBorder: {x: 38, y: 154, z: 41, w: 149}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -100,28 +97,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: 7_0
-      rect:
-        serializedVersion: 2
-        x: 40
-        y: 151
-        width: 400
-        height: 178
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 321165667a9aa8160800000000000000
-      internalID: 7028616704906629411
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
     physicsShape: []
     bones: []

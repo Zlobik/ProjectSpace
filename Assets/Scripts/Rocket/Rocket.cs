@@ -1,98 +1,140 @@
-﻿using DG.Tweening;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.Events;
 
+[RequireComponent(typeof(Animator))]
 public class Rocket : MonoBehaviour
 {
-    [SerializeField] private TMP_Text _coinsCounter;
-    [SerializeField] private int _maxLevelStars;
-    [SerializeField] private Transform _spawnPoint;
-    [SerializeField] private float _respawnTime;
-
-    [SerializeField] private Slider _healthBar;
+    [SerializeField] private float _timeBeforeRespawn;
+    [SerializeField] private Vector3 _firstRespawnPoint;
     [SerializeField] private float _damage;
-    [SerializeField] private float _speedWithoutDamage;
-    [SerializeField] private float _animationSpeed;
+    [SerializeField] private float _collisionForceWithoutDamage;
+    [SerializeField] private FuelBar _fuelBar;
+    [SerializeField] private int _health;
 
-    public bool IsDie;
+    private float _time;
+    private Animator _animator;
+    private Rigidbody2D _rigidBody;
+    private Vector3 _respawnPoint;
 
-    private int _starsCollected;
-    private float _TimeLeft;
-    private RocketMover _rocketMover;
+    public event UnityAction<float> ChangeHealth;
+    public event UnityAction<int> SubtractHealth;
 
-    public int Coins;
+    public float RespawnTime => _timeBeforeRespawn;
+    public int Health {get; private set;}
+    public bool IsDie { get; private set; }
+    public bool EmptyFuel { get; private set; }
+    public int StarsCollected { get; private set; }
+
+    private void Awake()
+    {
+        Health = _health;
+    }
 
     private void Start()
     {
         IsDie = false;
-        _rocketMover = gameObject.GetComponent<RocketMover>();
-        _TimeLeft = 0;
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.GetComponent<Coin>())
-        {
-            Coins++;
-            _coinsCounter.text = Coins.ToString();
-        }
-
-        else if (collision.GetComponent<CheckPoint>())
-            _spawnPoint = collision.transform;
-
-        else if (collision.GetComponent<Thorns>())
-            ChangeHealth(1);
-
-        else if (collision.TryGetComponent(out RepairKit repairKit))
-            ChangeHealth(-repairKit.Volume);
-
-        else if (collision.GetComponent<Star>())
-            _starsCollected++;
+        _animator = GetComponent<Animator>();
+        _rigidBody = GetComponent<Rigidbody2D>();
+        _respawnPoint = _firstRespawnPoint;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.GetComponent<Texture>() && _rocketMover.SpeedOfTheObject * _damage > _speedWithoutDamage)
-            ChangeHealth(_damage * _rocketMover.SpeedOfTheObject);
+        if (collision.gameObject.GetComponent<Texture>())
+        {
+            float collisionForce = collision.relativeVelocity.magnitude;
 
-        if (collision.gameObject.TryGetComponent(out Enemy enemy))
-            ChangeHealth(enemy.Damage);
+            if(collisionForce > _collisionForceWithoutDamage)
+                ChangeHealth?.Invoke(collisionForce * _damage);
+        }
+
+        if (collision.gameObject.GetComponent<Enemy>())
+        {
+            float damage = collision.gameObject.GetComponent<Enemy>().Damage;
+            ChangeHealth?.Invoke(damage);
+        }
+        if (collision.gameObject.GetComponent<TwoPointEnemy>())
+            ChangeHealth?.Invoke(collision.gameObject.GetComponent<TwoPointEnemy>().Damage);
+
+        if (collision.gameObject.GetComponent<Thorns>())
+            ChangeHealth?.Invoke(1);
+        if (collision.gameObject.GetComponent<VerticalPress>() || collision.gameObject.GetComponent<HorizontalPress>())
+            ChangeHealth?.Invoke(1);
     }
 
-    private void Die()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        _rocketMover.Refuel(1 -_rocketMover.GetFuelValue());
-        ChangeHealth(-1);
+        if (collision.GetComponent<RepairKit>())
+        {
+            float health = collision.GetComponent<RepairKit>().Health;
 
-        transform.position = _spawnPoint.position;
-        transform.DORotate(new Vector3(0,0,0), 0.001f);
+            ChangeHealth?.Invoke(-health);
+        }
+        if (collision.GetComponent<FuelCanister>())
+        {
+            float capacity = collision.GetComponent<FuelCanister>().Capacity;
 
-        _TimeLeft = 0;
-        IsDie = false;
+            _fuelBar.Refuel(capacity);
+        }
+        if (collision.GetComponent<CheckPoint>())
+            _respawnPoint = collision.gameObject.transform.position;
+        if (collision.GetComponent<LevelStar>())
+            StarsCollected++;
+    }
+
+
+    public void Die()
+    {
+        _time = 0;
+        IsDie = true;
+
+        _rigidBody.constraints = RigidbodyConstraints2D.FreezePosition;
+
+        _animator.SetBool("IsDead", IsDie);
+        _animator.SetBool("IsPressedUpButton", false);
+    }
+
+    public void OutOfFuel()
+    {
+        EmptyFuel = true;
+        _time = 0;
+
+        _rigidBody.constraints = RigidbodyConstraints2D.FreezePosition;
+
+        _animator.SetBool("IsPressedUpButton", false);
     }
 
     private void Update()
     {
-        if (IsDie)
+        if (IsDie || EmptyFuel)
         {
-            _TimeLeft += Time.deltaTime;
+            _time += Time.deltaTime;
 
-            if (_respawnTime <= _TimeLeft)
-                Die();
+            if(_time >= _timeBeforeRespawn)
+            {
+                Health--;
+                SubtractHealth?.Invoke(Health);
+
+                if (Health == 0)
+                {
+                    _respawnPoint = _firstRespawnPoint;
+                    Health = _health;
+                    SubtractHealth?.Invoke(Health);
+                }
+                _rigidBody.constraints = RigidbodyConstraints2D.None;
+                _rigidBody.constraints = RigidbodyConstraints2D.FreezeRotation;
+                transform.position = _respawnPoint;
+                transform.rotation = Quaternion.identity;
+
+                _fuelBar.Refuel(1);
+                ChangeHealth?.Invoke(-1);
+
+                EmptyFuel = false;
+                IsDie = false;
+                _animator.SetBool("IsDead", IsDie);
+            }
         }
-    }
-
-    private void ChangeHealth(float value)
-    {
-        _healthBar.DOValue(_healthBar.value - value, _animationSpeed);
-    }
-
-    public float GetHealthBarValue()
-    {
-        float value = _healthBar.value;
-        return value;
     }
 }

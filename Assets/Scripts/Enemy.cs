@@ -2,24 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(SpriteRenderer))]
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private float _speed;
     [SerializeField] private float _damage;
-    [SerializeField] private SpriteRenderer _renderer;
+    [SerializeField] private float _speed;
     [SerializeField] private Transform _path;
 
+    private SpriteRenderer _render;
     private Transform[] _points;
     private int _currentPoint = 0;
-    public float Damage { get; private set; }
+
+    public float Damage => _damage;
 
     private void Start()
     {
-        Damage = _damage;
+        _render = GetComponent<SpriteRenderer>();
+
         _points = new Transform[_path.childCount];
 
-        for (int i = 0; i < _points.Length; i++)
+        for (int i = 0; i < _path.childCount; i++)
             _points[i] = _path.GetChild(i);
     }
 
@@ -29,11 +30,11 @@ public class Enemy : MonoBehaviour
 
         if (transform.position == _points[_currentPoint].position)
         {
+            _render.flipX = !_render.flipX;
             _currentPoint++;
-            _renderer.flipX = !_renderer.flipX;
-        }
 
-        if (_currentPoint == _points.Length)
-            _currentPoint = 0;
+            if (_currentPoint == _points.Length)
+                _currentPoint = 0;
+        }
     }
 }
