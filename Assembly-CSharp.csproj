@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{721D1D73-BAAD-22A5-A331-34E1B0897E07}</ProjectGuid>
+    <ProjectGuid>{41F23754-D826-072B-5AD5-C52908B616A5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -74,6 +74,7 @@
     <Compile Include="Assets\Scripts\GreenLight.cs" />
     <Compile Include="Assets\Scripts\LevelStar.cs" />
     <Compile Include="Assets\Scripts\Main menu\Background.cs" />
+    <Compile Include="Assets\Scripts\Main menu\ChooseRocket.cs" />
     <Compile Include="Assets\Scripts\Main menu\Level1.cs" />
     <Compile Include="Assets\Scripts\Main menu\LevelButton.cs" />
     <Compile Include="Assets\Scripts\Main menu\LevelInfo.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="Assets\Scripts\Main menu\SetRandomBackground.cs" />
     <Compile Include="Assets\Scripts\Main menu\Teleport.cs" />
     <Compile Include="Assets\Scripts\Main menu\UnlockNextLevel.cs" />
+    <Compile Include="Assets\Scripts\OnLevelStart.cs" />
     <Compile Include="Assets\Scripts\OpenDoorButton.cs" />
     <Compile Include="Assets\Scripts\PauseMenu.cs" />
     <Compile Include="Assets\Scripts\PressButtonsPool.cs" />
@@ -300,7 +302,7 @@
       <HintPath>C:/Users/Bandit/Documents/Projects/2019.4.9f1/Editor/Data/Managed/UnityEditor.dll</HintPath>
     </Reference>
     <Reference Include="DOTween">
-      <HintPath>Z:/UnityProjects/Space2/Assets/Plugins/Demigiant/DOTween/DOTween.dll</HintPath>
+      <HintPath>Z:/UnityProjects/Space3/Assets/Plugins/Demigiant/DOTween/DOTween.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:/Users/Bandit/Documents/Projects/2019.4.9f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
@@ -648,90 +650,90 @@
       <HintPath>C:/Users/Bandit/Documents/Projects/2019.4.9f1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Xml.Serialization.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline.Editor">
-      <HintPath>Z:/UnityProjects/Space2/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+      <HintPath>Z:/UnityProjects/Space3/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Animation.Runtime">
-      <HintPath>Z:/UnityProjects/Space2/Library/ScriptAssemblies/Unity.2D.Animation.Runtime.dll</HintPath>
+      <HintPath>Z:/UnityProjects/Space3/Library/ScriptAssemblies/Unity.2D.Animation.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.PixelPerfect.Editor">
-      <HintPath>Z:/UnityProjects/Space2/Library/ScriptAssemblies/Unity.2D.PixelPerfect.Editor.dll</HintPath>
+      <HintPath>Z:/UnityProjects/Space3/Library/ScriptAssemblies/Unity.2D.PixelPerfect.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VSCode.Editor">
-      <HintPath>Z:/UnityProjects/Space2/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+      <HintPath>Z:/UnityProjects/Space3/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.SpriteShape.Editor">
-      <HintPath>Z:/UnityProjects/Space2/Library/ScriptAssemblies/Unity.2D.SpriteShape.Editor.dll</HintPath>
+      <HintPath>Z:/UnityProjects/Space3/Library/ScriptAssemblies/Unity.2D.SpriteShape.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>Z:/UnityProjects/Space2/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>Z:/UnityProjects/Space3/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Path.Editor">
-      <HintPath>Z:/UnityProjects/Space2/Library/ScriptAssemblies/Unity.2D.Path.Editor.dll</HintPath>
+      <HintPath>Z:/UnityProjects/Space3/Library/ScriptAssemblies/Unity.2D.Path.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>Z:/UnityProjects/Space2/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+      <HintPath>Z:/UnityProjects/Space3/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
-      <HintPath>Z:/UnityProjects/Space2/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+      <HintPath>Z:/UnityProjects/Space3/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Animation.Triangle.Runtime">
-      <HintPath>Z:/UnityProjects/Space2/Library/ScriptAssemblies/Unity.2D.Animation.Triangle.Runtime.dll</HintPath>
+      <HintPath>Z:/UnityProjects/Space3/Library/ScriptAssemblies/Unity.2D.Animation.Triangle.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="PsdPlugin">
-      <HintPath>Z:/UnityProjects/Space2/Library/ScriptAssemblies/PsdPlugin.dll</HintPath>
+      <HintPath>Z:/UnityProjects/Space3/Library/ScriptAssemblies/PsdPlugin.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>Z:/UnityProjects/Space2/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+      <HintPath>Z:/UnityProjects/Space3/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rider.Editor">
-      <HintPath>Z:/UnityProjects/Space2/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+      <HintPath>Z:/UnityProjects/Space3/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Mathematics">
-      <HintPath>Z:/UnityProjects/Space2/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
+      <HintPath>Z:/UnityProjects/Space3/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Psdimporter.Editor">
-      <HintPath>Z:/UnityProjects/Space2/Library/ScriptAssemblies/Unity.2D.Psdimporter.Editor.dll</HintPath>
+      <HintPath>Z:/UnityProjects/Space3/Library/ScriptAssemblies/Unity.2D.Psdimporter.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.InternalAPIEngineBridge.001">
-      <HintPath>Z:/UnityProjects/Space2/Library/ScriptAssemblies/Unity.InternalAPIEngineBridge.001.dll</HintPath>
+      <HintPath>Z:/UnityProjects/Space3/Library/ScriptAssemblies/Unity.InternalAPIEngineBridge.001.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Sprite.Editor">
-      <HintPath>Z:/UnityProjects/Space2/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
+      <HintPath>Z:/UnityProjects/Space3/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Common.Runtime">
-      <HintPath>Z:/UnityProjects/Space2/Library/ScriptAssemblies/Unity.2D.Common.Runtime.dll</HintPath>
+      <HintPath>Z:/UnityProjects/Space3/Library/ScriptAssemblies/Unity.2D.Common.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Tilemap.Editor">
-      <HintPath>Z:/UnityProjects/Space2/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
+      <HintPath>Z:/UnityProjects/Space3/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.SpriteShape.Runtime">
-      <HintPath>Z:/UnityProjects/Space2/Library/ScriptAssemblies/Unity.2D.SpriteShape.Runtime.dll</HintPath>
+      <HintPath>Z:/UnityProjects/Space3/Library/ScriptAssemblies/Unity.2D.SpriteShape.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.PixelPerfect">
-      <HintPath>Z:/UnityProjects/Space2/Library/ScriptAssemblies/Unity.2D.PixelPerfect.dll</HintPath>
+      <HintPath>Z:/UnityProjects/Space3/Library/ScriptAssemblies/Unity.2D.PixelPerfect.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Animation.Editor">
-      <HintPath>Z:/UnityProjects/Space2/Library/ScriptAssemblies/Unity.2D.Animation.Editor.dll</HintPath>
+      <HintPath>Z:/UnityProjects/Space3/Library/ScriptAssemblies/Unity.2D.Animation.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Mathematics.Editor">
-      <HintPath>Z:/UnityProjects/Space2/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
+      <HintPath>Z:/UnityProjects/Space3/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>Z:/UnityProjects/Space2/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>Z:/UnityProjects/Space3/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Common.Editor">
-      <HintPath>Z:/UnityProjects/Space2/Library/ScriptAssemblies/Unity.2D.Common.Editor.dll</HintPath>
+      <HintPath>Z:/UnityProjects/Space3/Library/ScriptAssemblies/Unity.2D.Common.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.InternalAPIEditorBridge.001">
-      <HintPath>Z:/UnityProjects/Space2/Library/ScriptAssemblies/Unity.InternalAPIEditorBridge.001.dll</HintPath>
+      <HintPath>Z:/UnityProjects/Space3/Library/ScriptAssemblies/Unity.InternalAPIEditorBridge.001.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
-      <HintPath>Z:/UnityProjects/Space2/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+      <HintPath>Z:/UnityProjects/Space3/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{6AA89959-CF4D-F389-8FF4-DF709E281BF2}</Project>
+      <Project>{11110AAD-D1D4-FC24-9BD8-0C9E9BBDF94C}</Project>
       <Name>Assembly-CSharp-firstpass</Name>
     </ProjectReference>
   </ItemGroup>

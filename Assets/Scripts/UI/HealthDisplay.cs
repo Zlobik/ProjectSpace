@@ -22,11 +22,11 @@ public class HealthDisplay : MonoBehaviour
 
     private void OnEnable()
     {
-        _rocket.SubtractHealth += SubstractHealth;
+        _rocket.SubstractHealth += SubstractHealth;
     }
 
     private void OnDisable()
     {
-        _rocket.SubtractHealth -= SubstractHealth;
+        _rocket.SubstractHealth -= SubstractHealth;
     }
 }
