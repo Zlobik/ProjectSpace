@@ -37,7 +37,7 @@ public class AllObjectsPoolRespawner : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_rocket.IsDie || _rocket.EmptyFuel)
+        if (_rocket.IsDie)
         {
             if (_isDead)
             {

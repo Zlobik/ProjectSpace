@@ -18,8 +18,14 @@ public class FuelBar : MonoBehaviour
         _fuelBar = GetComponent<Slider>();
     }
 
-    public void Refuel(float value)
+    public void AddFuel(float value)
     {
         _fuelBar.DOValue(_fuelBar.value + value, _animationSpeed);
+    }
+
+    public void CheckFuel()
+    {
+        if (_fuelBar.value == 0)
+            _rocket.Die();
     }
 }

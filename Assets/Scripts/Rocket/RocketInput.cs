@@ -20,7 +20,7 @@ public class RocketInput : MonoBehaviour
 
     private void Update()
     {
-        if (!_rocket.EmptyFuel)
+        if (!_rocket.IsDie)
         {
             if (Input.GetKey(KeyCode.W))
             {

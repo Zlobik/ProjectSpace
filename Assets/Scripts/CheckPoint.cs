@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class CheckPoint : MonoBehaviour
 {
-    [SerializeField] private HealthDisplay _healthDisplay;
-
     private Rocket _rocket;
     private SpriteRenderer _render;
     private CircleCollider2D _circleCollider;
@@ -26,15 +24,6 @@ public class CheckPoint : MonoBehaviour
             _rocket = collision.GetComponent<Rocket>();
             _render.sprite = null;
             _circleCollider.enabled = false;
-        }
-    }
-
-    private void FixedUpdate()
-    {
-        if (Convert.ToInt32(_healthDisplay.Text) == 0)
-        {
-            _render.sprite = _currentSprite;
-            _circleCollider.enabled = true;
         }
     }
 }

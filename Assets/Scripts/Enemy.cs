@@ -12,8 +12,6 @@ public class Enemy : MonoBehaviour
     private Transform[] _points;
     private int _currentPoint = 0;
 
-    public float Damage => _damage;
-
     private void Start()
     {
         _render = GetComponent<SpriteRenderer>();
@@ -22,6 +20,12 @@ public class Enemy : MonoBehaviour
 
         for (int i = 0; i < _path.childCount; i++)
             _points[i] = _path.GetChild(i);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.TryGetComponent<Rocket>(out Rocket rocket))
+            rocket.TakeDamage(_damage);
     }
 
     private void Update()

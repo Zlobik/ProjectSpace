@@ -19,8 +19,10 @@ public class FuelCanister : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.GetComponent<Rocket>())
+        if (collision.TryGetComponent<Rocket>(out Rocket rocket))
         {
+            rocket.AddFuel(_capacity);
+
             _render.sprite = null;
             _boxCollider.enabled = false;
         }

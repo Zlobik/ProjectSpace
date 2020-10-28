@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class RepairKit : MonoBehaviour
 {
-    [SerializeField] private float _health;
+    [SerializeField] private float _capacity;
 
     private SpriteRenderer _render;
     private BoxCollider2D _boxCollider;
-
-    public float Health => _health;
 
     private void Start()
     {
@@ -19,8 +17,9 @@ public class RepairKit : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.GetComponent<Rocket>())
+        if (collision.TryGetComponent<Rocket>(out Rocket rocket))
         {
+            rocket.AddHealth(_capacity);
             _render.sprite = null;
             _boxCollider.enabled = false;
         }

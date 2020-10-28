@@ -44,7 +44,7 @@ public class PressButtonsPool : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_rocket.IsDie || _rocket.EmptyFuel)
+        if (_rocket.IsDie)
         {
             if (_isDisableAllGreenLights)
             {
@@ -60,7 +60,6 @@ public class PressButtonsPool : MonoBehaviour
 
             if (_time >= _rocket.RespawnTime + 3f)
             {
-                _isDisableAllGreenLights = true;
                 _time = 0;
             }
         }

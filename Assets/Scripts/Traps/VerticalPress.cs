@@ -8,6 +8,7 @@ public class VerticalPress : MonoBehaviour
     [SerializeField] private float _offsetDepthY;
     [SerializeField] private float _goBackSpeed;
     [SerializeField] private float _compressSpeed;
+    [SerializeField] private float _damage;
 
     private Vector3 _currentPosition;
     private bool _isCompress = true;
@@ -16,6 +17,12 @@ public class VerticalPress : MonoBehaviour
     private void Start()
     {
         _currentPosition = transform.position;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.TryGetComponent<Rocket>(out Rocket rocket))
+            rocket.TakeDamage(_damage);
     }
 
     private void MoveBackY()

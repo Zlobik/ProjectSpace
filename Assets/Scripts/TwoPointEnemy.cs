@@ -26,6 +26,12 @@ public class TwoPointEnemy : MonoBehaviour
         transform.position = _points[0];
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.TryGetComponent<Rocket>(out Rocket rocket))
+            rocket.TakeDamage(_damage);
+    }
+
     private void MoveToFirstPoint()
     {
         transform.DOMoveX(_points[0].x, _firstPointSpeed);
